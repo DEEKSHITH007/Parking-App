@@ -5,82 +5,85 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 public class ReadInput {
 
-	private Commands commands;
 	private Parking parking;
 
 	public ReadInput() {
 		super();
-		this.commands = new Commands();
 		this.parking = new Parking();
 	}
 
 	public void asText(String input) {
 		String[] inputs = input.split(" ");
-		switch (inputs.length) {
-		case 1:
-			try {
-				Method method = commands.commandsMap.get(input);
-				if (method != null && input.equalsIgnoreCase("status")) {
-					method.invoke(parking);
-				} else {
-					asFile(input);
-					System.out.println("Please provide a valid input");
-				}
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-			} catch (Exception e) {
-				e.printStackTrace();
+
+		switch (inputs[0]) {
+		case "create_parking_lot": {
+			if (inputs.length == 2)
+				parking.createParkingLot(Integer.parseInt(inputs[1]));
+			else {
+				System.out.println("Enter a valid number");
+
 			}
+
+		}
 			break;
-		case 2:
-			try {
-				Method method = commands.commandsMap.get(inputs[0]);
-				if (method != null && inputs[1] != null) {
-					if (inputs[0].equalsIgnoreCase("create_parking_lot")
-							|| inputs[0].equalsIgnoreCase("slot_numbers_for_driver_of_age")) {
-						method.invoke(parking, Integer.parseInt(inputs[1]));
-					} else if (inputs[0].equalsIgnoreCase("slot_number_for_car_with_reg_number")
-							|| inputs[0].equalsIgnoreCase("leave")) {
-						method.invoke(parking, inputs[1]);
-					}else {
-						System.out.println("Please provide driver's age");
-					}
-				} else {
-					System.out.println("Please provide a valid input");
-				}
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-			} catch (Exception e) {
-				e.printStackTrace();
+		case "park": {
+			if (inputs.length == 3)
+				parking.park(inputs[1], Integer.parseInt(inputs[2]));
+			else {
+				System.out.println("Please provide a valid Registration number and driver's age");
 			}
+		}
 			break;
-		case 3:
-			try {
-				Method method = commands.commandsMap.get(inputs[0]);
-				if (method != null && inputs[0].equalsIgnoreCase("park") && inputs[1] != null && inputs[2] != null) {
-					method.invoke(parking, inputs[1], Integer.parseInt(inputs[2]));
-				} else {
-					System.out.println("Please provide a valid input");
-				}
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-			} catch (Exception e) {
-				e.printStackTrace();
+		case "leave": {
+			if (inputs.length == 2)
+				parking.leave(inputs[1]);
+			else {
+				System.out.println("Please enter the slot to be vacated");
 			}
+		}
 			break;
-		default:
-			System.out.println("Please provide a valid input input.");
+		case "status": {
+			if (inputs.length == 1)
+				parking.status();
+			else {
+				System.out.println("Please provide a valid input");
+			}
+
+		}
+			break;
+		case "slot_numbers_for_driver_of_age": {
+			if (inputs.length == 2)
+				parking.getSlotNumbersFromDriverAge(Integer.parseInt(inputs[1]));
+			else {
+				System.out.println("Please provide a valid driver's age");
+			}
+
+		}
+			break;
+		case "slot_number_for_car_with_reg_number": {
+			if (inputs.length == 2)
+				parking.getSlotNumberFromRegistrationNumber(inputs[1]);
+			else {
+				System.out.println("Please provide a valid Registration number.");
+			}
+		}
+			break;
+		case "file": {
+			if (inputs.length == 2)
+				asFile(inputs[1]);
+			else {
+				System.out.println("Please provide a valid file name");
+			}
+		}
+			break;
+		default: {
+			System.out.println("Please enter a valid command");
+
+		}
+			break;
 		}
 
 	}
