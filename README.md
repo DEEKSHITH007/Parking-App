@@ -10,9 +10,9 @@ mvn clean install
 #Running the project
 
 From the project directory, run this command -
-java -jar target/Parking-App-0.0.1-SNAPSHOT-jar-with-dependencies.jar <command>
+java -jar target/Parking-App-0.0.1-SNAPSHOT-jar-with-dependencies.jar command
 
-<command> - 
+command - 
 1. create_parking_lot <valid number greater than zero>
 2. park <Registration number> <Drivers age>
 3. leave <slot number>
