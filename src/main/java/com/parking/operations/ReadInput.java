@@ -71,6 +71,15 @@ public class ReadInput {
 			}
 		}
 			break;
+		case "register_number_from_age": {
+			if (inputs.length == 2)
+				parking.getRegistrationNumbersFromAge(Integer.parseInt(inputs[1]));
+			else {
+				System.out.println("Please provide a valid Registration number.");
+			}
+		}
+
+			break;
 		case "file": {
 			if (inputs.length == 2)
 				asFile(inputs[1]);
@@ -79,11 +88,8 @@ public class ReadInput {
 			}
 		}
 			break;
-		default: {
+		default:
 			System.out.println("Please enter a valid command");
-
-		}
-			break;
 		}
 
 	}

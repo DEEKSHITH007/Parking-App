@@ -17,24 +17,23 @@ public class Parking {
 	Map<Integer, ArrayList<String>> ageToRegistrationNumbers;
 
 	public void createParkingLot(Integer lotCount) {
-		try {
+		if (lotCount > 0) {
 			this.MAX_SIZE = lotCount;
-		} catch (Exception e) {
-			System.out.println("Invalid lot count");
-			System.out.println();
-		}
-		this.availableSlotList = new ArrayList<Integer>() {
+			this.availableSlotList = new ArrayList<Integer>() {
+				private static final long serialVersionUID = 5021459030760983248L;
+			};
 
-			private static final long serialVersionUID = 5021459030760983248L;
-		};
-		for (int i = 1; i <= this.MAX_SIZE; i++) {
-			availableSlotList.add(i);
+			for (int i = 1; i <= this.MAX_SIZE; i++) {
+				availableSlotList.add(i);
+			}
+			this.slotToCar = new HashMap<String, Vehicle>();
+			this.registrationNumberToSlot = new HashMap<String, String>();
+			this.ageToRegistrationNumbers = new HashMap<Integer, ArrayList<String>>();
+			System.out.println("Created parking lot with " + lotCount + " slots");
+			System.out.println();
+		} else {
+			System.out.println("Please provide a value greater than zero");
 		}
-		this.slotToCar = new HashMap<String, Vehicle>();
-		this.registrationNumberToSlot = new HashMap<String, String>();
-		this.ageToRegistrationNumbers = new HashMap<Integer, ArrayList<String>>();
-		System.out.println("Created parking lot with " + lotCount + " slots");
-		System.out.println();
 	}
 
 	public void park(String regNo, Integer age) {

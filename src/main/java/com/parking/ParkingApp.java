@@ -10,31 +10,22 @@ public class ParkingApp {
 
 	public static void main(String[] args) {
 		ReadInput input = new ReadInput();
-		switch (args.length) {
-		case 0:
-			System.out.println("Please enter 'exit' to quit");
-			System.out.println("Waiting for input...");
-			for (;;) {
-				try {
-					BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
-					String inputString = bufferRead.readLine();
-					if (inputString.equalsIgnoreCase("exit")) {
-						break;
-					} else if ((inputString == null) || (inputString.isEmpty())) {
-					} else {
-						input.asText(inputString.trim());
-					}
-				} catch (IOException e) {
-					System.out.println("An unexpected error occured while reading the input. Please try again");
-					e.printStackTrace();
+		System.out.println("Please enter 'exit' to quit");
+		System.out.println("Waiting for input...");
+		for (;;) {
+			try {
+				BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+				String inputString = bufferRead.readLine();
+				if (inputString.equalsIgnoreCase("exit")) {
+					break;
+				} else if ((inputString == null) || (inputString.isEmpty())) {
+				} else {
+					input.asText(inputString.trim());
 				}
+			} catch (IOException e) {
+				System.out.println("An unexpected error occured while reading the input. Please try again");
+				e.printStackTrace();
 			}
-			break;
-		case 1:
-			input.asFile(args[0]);
-			break;
-		default:
-			System.out.println("Invalid usage, please read the documentation");
 		}
 
 	}
